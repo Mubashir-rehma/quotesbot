@@ -11,7 +11,7 @@ from scrapy.linkextractors import LinkExtractor
 
 
 class ToScrapeCSSSpider(scrapy.Spider):
-    name = 'crawl_site
+    name = 'crawl_site'
     def __init__(self, url):
         domain = tldextract.extract(url).domain
         r_domain = tldextract.extract(url).registered_domain
@@ -28,7 +28,7 @@ class ToScrapeCSSSpider(scrapy.Spider):
     def parse(self, response):
         address = response.url
         r_domain = tldextract.extract(address).registered_domain
-        print(address)
+#         print(address)
         count_address = len(address)
         content_type = response.headers['Content-Type']
         status_code = response.status
