@@ -7,6 +7,7 @@ from scrapy.linkextractors import LinkExtractor
 # from mdb import get_database
 # import datetime
 # import pytz
+import tldextract
 # now = datetime.datetime.now(pytz.timezone('US/Pacific'))
 
 
