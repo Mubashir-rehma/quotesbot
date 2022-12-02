@@ -10,17 +10,23 @@ import datetime
 
 
 class ToScrapeCSSSpider(scrapy.Spider):
-    name = "toscrape-css"
-    start_urls = [
-        'https://www.domainbird.com.au/',
-    ]
+    def __init__(self, url):
+        domain = tldextract.extract(url).domain
+        r_domain = tldextract.extract(url).registered_domain
 
-    rules = (
-        Rule(LinkExtractor(allow_domains=['domainbird.com.au']), follow=True, callback="parse_item"),
-    )
+        self.name = domain
+        self.allowed_domains = [r_domain]
+        self.start_urls = [url]
 
-    def parse_item(self, response):
+
+        # self.rules = (
+        #     Rule(LinkExtractor(allow_domains=[r_domain]), follow=True, callback=self.parse_item),
+        # )
+
+    def parse(self, response):
         address = response.url
+        r_domain = tldextract.extract(address).registered_domain
+        print(address)
         count_address = len(address)
         content_type = response.headers['Content-Type']
         status_code = response.status
@@ -51,6 +57,11 @@ class ToScrapeCSSSpider(scrapy.Spider):
             'Robot': robot,
             'Download time': download_time
         }
+
+
+
+        for a in LinkExtractor(allow_domains=[r_domain]).extract_links(response):
+                yield response.follow(a, callback=self.parse)
 
 
 # class ToScrapeCSSSpider(scrapy.Spider):
