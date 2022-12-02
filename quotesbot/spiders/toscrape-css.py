@@ -11,6 +11,7 @@ from scrapy.linkextractors import LinkExtractor
 
 
 class ToScrapeCSSSpider(scrapy.Spider):
+    name = 'crawl_site
     def __init__(self, url):
         domain = tldextract.extract(url).domain
         r_domain = tldextract.extract(url).registered_domain
